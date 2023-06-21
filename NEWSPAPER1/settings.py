@@ -140,3 +140,6 @@ MESSAGE_TAGS = {
     messages.ERROR: "error",
     
 }
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

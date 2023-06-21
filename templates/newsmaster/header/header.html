@@ -112,18 +112,26 @@
                             <div class="header-right f-right d-none d-lg-block">
                                 <!-- Heder social -->
                                 <ul class="header-social">
-                                    <li>
-                                        <a href="https://www.fb.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                    </li>
+ 
+                                    {% if user.is_authenticated %}
+                                        <li>
+                                            <a href="#"><i class="fas fa-plus"></i></a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+                                        </li>
+ 
+                                    {% else %}
+ 
+                                        <li>
+                                            <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
+                                        </li>
+
+                                    {% endif %}
+ 
+
+ 
                                 </ul>
                                 <!-- Search Nav -->
                                 <div class="nav-search search-switch">

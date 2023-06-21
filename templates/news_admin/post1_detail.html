@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+  | {{ post2.title }}
+ 
+{% endblock title %}
+
+
+{% block content %}
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ post2.title|truncatechars:50 }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'post1-delete' post2.pk %}" method="POST">
+            {% csrf_token %}
+            <h6>Are you sure you want to delete ???</h6>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-outline-danger">Delete</button>
+              </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+ 
+    <div class="post">
+        {% if post2.published_at %}
+        <div class="date">{{ post2.published_at }}</div>
+        {% else %}
+        {% if user.is_authenticated %}
+        <a href="{% url 'post1-publish' post2.pk %}" class="btn btn-primary">Publish</a>
+        {% endif %}
+        {% endif %}
+
+
+        <h1>
+            <a href="{% url 'post1-detail' post2.pk %}">{{ post2.title }}</a>
+        </h1>
+        {% if user.is_authenticated %}
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Delete
+  </button>
+            <!-- <a href="{% url 'post1-delete' post2.pk %}" class="btn btn-danger">Delete</a> -->
+
+            <a href="{% url 'post1-update' post2.pk %}" class="btn btn-success">Update</a>
+        {% endif %}
+        <p>
+            <p>{{ post2.content }}</p>
+        </p>
+    </div>
+ 
+ 
+{% endblock content %}
