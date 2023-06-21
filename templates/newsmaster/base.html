@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>NewsPaper</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="shortcut icon"
+              type="image/x-icon"
+              href="{% static 'assets/img/favicon.ico' %}">
+
+        <!-- CSS here -->
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'assets/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/ticker-style.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    </head>
+
+    <body>
+
+        {% include "newsmaster/preloader.html" %}
+
+        {% include "newsmaster/header/header.html" %}
+
+        {% block content %}
+
+        {% endblock content %}
+
+
+        {% include "newsmaster/footer/footer.html" %}
+
+
+
+        <!-- Search model Begin -->
+        <div class="search-model-box">
+            <div class="d-flex align-items-center h-100 justify-content-center">
+                <div class="search-close-btn">+</div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Searching key.....">
+                </form>
+            </div>
+        </div>
+        <!-- Search model end -->
+
+        <!-- JS here -->
+
+        <script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'assets/js/slick.min.js' %}"></script>
+        <!-- Date Picker -->
+        <script src="{% static 'assets/js/gijgo.min.js' %}"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="{% static 'assets/js/wow.min.js' %}"></script>
+        <script src="{% static 'assets/js/animated.headline.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+
+        <!-- Scrollup, nice-select, sticky -->
+        <script src="{% static 'assets/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+ 
+        <!-- contact js -->
+        <script src="{% static 'assets/js/contact.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.form.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'assets/js/mail-script.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+ 
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="{% static 'assets/js/plugins.js' %}"></script>
+        <script src="{% static 'assets/js/main.js' %}"></script>
+ 
+        <script>
+            $("#newsleter_side_form").submit(function(e) {
+                e.preventDefault(); // it makes that prevent from performing default action
+                let serializedData = $(this).serialize(); //it converts to understandable form by ajax
+
+                $.ajax({
+                    type: "POST",
+                    data: serializedData,
+                    url: "{% url 'newsletter' %}",
+                    success: function(response) {
+                        $("#newsletter_side_message").append(`
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>${response.message}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                        `)
+                        setTimeout(function() {
+                            $('.alert').alert('close');
+                        }, 5000)
+                        $("newsleter_side_form").trigger("reset")
+                    },
+                    error: function(response) {
+                        $("#newsletter_side_message").append(`
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>${response.responseJSON.message}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                        `)
+                        setTimeout(function() {
+                            $('.alert').alert('close');
+                        }, 5000)
+                    },
+
+                })
+
+
+            })
+        </script>
+
+
+        {% block extra_js %}
+
+        {% endblock extra_js %}
+
+
+    </body>
+</html>

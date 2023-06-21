@@ -1,0 +1,30 @@
+
+{% load static %}
+
+<!-- Trending Top -->
+<div class="slider-active">
+    <!-- Single -->
+    <div class="single-slider">
+        <div class="trending-top mb-30">
+            <div class="trend-top-img">
+                <img src="{{ featured_post.featured_image.url }}"
+                     alt="{{ featured_post.title }}">
+                <div class="trend-top-cap">
+                    <span class="bgr"
+                          data-animation="fadeInUp"
+                          data-delay=".2s"
+                          data-duration="1000ms">{{ featured_post.category.name }}</span>
+                    <h2>
+                        <a href="{% url 'post-detail' featured_post.pk %}"
+                           data-animation="fadeInUp"
+                           data-delay=".4s"
+                           data-duration="1000ms">{{ featured_post.title }}</a>
+                    </h2>
+                    <p data-animation="fadeInUp" data-delay=".6s" data-duration="1000ms">by Alice cloe   -   Jun 19, 2020</p>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+ 
+</div>

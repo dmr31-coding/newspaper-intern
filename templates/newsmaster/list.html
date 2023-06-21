@@ -1,0 +1,60 @@
+{% extends "newsmaster/base.html" %}
+
+{% block content %}
+    <!--================Blog Area =================-->
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+
+                        {% for post in posts %}
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="{{ post.featured_image.url }}" alt="">
+                                    <a href="#" class="blog_item_date">
+                                        <h3>{{ post.published_at|date:"d" }}</h3>
+                                        <p>{{ post.published_at|date:"M" }}</p>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="{% url 'post-detail' post.pk %}">
+                                        <h2>{{ post.title|truncatechars:44 }}</h2>
+                                    </a>
+                                    <p>{{ post.content|truncatechars:200 }}</p>
+                                    <ul class="blog-info-link">
+                                        <li>
+                                            <a href="#"><i class="fa fa-user"></i> {{ post.tag.all|join:", " }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-comments"></i> {{ post.latest_comments.count }} Comments </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+                        {% endfor %}
+ 
+                        {% include "newsmaster/pagination.html" %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+ 
+                        {% include "newsmaster/main/detail/right/search.html" %}
+
+                        {% include "newsmaster/main/detail/right/category.html" %}
+
+                        {% include "newsmaster/main/detail/right/popular.html" %}
+
+                        {% include "newsmaster/main/detail/right/tag.html" %}
+ 
+                        {% include "newsmaster/main/detail/right/newsletter.html" %}
+ 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+{% endblock content %}

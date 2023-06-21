@@ -1,0 +1,37 @@
+<!--   Weekly3-News start -->
+<div class="weekly3-news-area pt-80 pb-130">
+    <div class="container">
+        <div class="weekly3-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="slider-wrapper">
+                        <!-- Slider -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="weekly3-news-active dot-style d-flex">
+
+                                    {% for weekly_top_post in weekly_top_posts %}
+                                        <div class="weekly3-single">
+                                            <div class="weekly3-img">
+                                                <img src="{{ weekly_top_post.featured_image.url }}"
+                                                     alt="{{ weekly_top_post.title }}"
+                                                     height="150px">
+                                            </div>
+                                            <div class="weekly3-caption">
+                                                <h4>
+                                                    <a href="{% url 'post-detail' featured_post.pk %}">{{ weekly_top_post.title }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+ 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Weekly-News -->
