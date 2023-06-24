@@ -5,10 +5,10 @@
         <div class="post">
             {% if post.published_at %}<div class="date">{{ post.published_at }}</div>{% endif %}
             <h1>
-                <a href="{% url 'post-detail' post.pk %}">{{ post.title|safe }}</a>
+                <a href="{% url 'draft1-detail' post.pk %}">{{ post.title }}</a>
             </h1>
             <p>
-                {{ post.content|safe|truncatechars:200 }}
+                <p>{{ post.content|truncatechars:200|safe }}</p>
             </p>
         </div>
     {% endfor %}

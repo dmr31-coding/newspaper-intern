@@ -115,17 +115,24 @@
  
                                     {% if user.is_authenticated %}
                                         <li>
-                                            <a href="#"><i class="fas fa-plus"></i></a>
+                                            <a href="{% url 'post1-create' %}"><i class="fa-solid fa-plus"></i></a>
                                         </li>
 
                                         <li>
-                                            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+                                            <a href="{% url 'draft1-list' %}">
+                                                <!-- <span class="material-symbols-outlined lg-icons">edit_square</span> -->
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
                                         </li>
  
                                     {% else %}
  
                                         <li>
-                                            <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i></a>
+                                            <a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i></a>
                                         </li>
 
                                     {% endif %}
@@ -134,9 +141,17 @@
  
                                 </ul>
                                 <!-- Search Nav -->
-                                <div class="nav-search search-switch">
-                                    <i class="fa fa-search"></i>
-                                </div>
+                                
+                                    
+                                    <div class="search-box float-right  ml-3">
+                                        <form action="{% url 'post-search' %}" method="get">
+                                            <input type="text" placeholder="Search" value="{{ query }}" name="query">
+                                            
+                                        </form>
+                                    </div>
+                                    
+                                      
+                                
                             </div>
                         </div>
                         <!-- Mobile Menu -->

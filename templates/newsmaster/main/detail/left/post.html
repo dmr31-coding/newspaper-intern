@@ -20,14 +20,14 @@
             </li>
 
             <li>
-                <a href="#"><i class="fa fa-comments"></i> 03 Comments</a>
+                <a href="#"><i class="fa fa-comments"></i> {{ post.latest_comments.count }} Comments</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-eye"></i> 03 Views</a>
+                <a href="#"><i class="fa fa-eye"></i> {{ post.views_count }} Views</a>
             </li>
 
         </ul>
-        {{ post.content|linebreaksbr }}
+        {{ post.content|safe }}
 
     </div>
 </div>

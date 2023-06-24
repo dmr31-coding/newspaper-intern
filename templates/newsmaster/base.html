@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     </head>
 
     <body>
@@ -117,6 +118,48 @@
                     },
                     error: function(response) {
                         $("#newsletter_side_message").append(`
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>${response.responseJSON.message}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                        `)
+                        setTimeout(function() {
+                            $('.alert').alert('close');
+                        }, 5000)
+                    },
+
+                })
+
+
+            })
+
+
+            $("#newsleter_bottom_form").submit(function(e) {
+                e.preventDefault(); // it makes that prevent from performing default action
+                let serializedData = $(this).serialize(); //it converts to understandable form by ajax
+
+                $.ajax({
+                    type: "POST",
+                    data: serializedData,
+                    url: "{% url 'newsletter' %}",
+                    success: function(response) {
+                        $("#newsletter_bottom_message").append(`
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>${response.message}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                        `)
+                        setTimeout(function() {
+                            $('.alert').alert('close');
+                        }, 5000)
+                        $("newsleter_bottom_form").trigger("reset")
+                    },
+                    error: function(response) {
+                        $("#newsletter_bottom_message").append(`
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>${response.responseJSON.message}</strong>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
