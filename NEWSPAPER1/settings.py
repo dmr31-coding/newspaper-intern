@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # custom apps
     "newspaper1_app",
     "api_app",
+    
 ]
 
 MIDDLEWARE = [
