@@ -5,7 +5,7 @@
         <div class="media post_item">
             <img src="{{ recent_post.featured_image.url }}"
                  alt="{{ recent_post.title }}"
-                 height="160px">
+                 height="160px" width="150px">
             <div class="media-body">
                 <a href="{% url 'post-detail' recent_post.pk %}">
                     <h3>{{ recent_post.title|truncatechars:25 }}</h3>

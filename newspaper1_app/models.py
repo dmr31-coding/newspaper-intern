@@ -77,3 +77,13 @@ class Comment(TimeStampModel):
     
     def __str__(self):
         return self.comment[:50]
+    
+    
+    
+from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    views = models.PositiveIntegerField(default=0)
+    # Other fields and methods related to the article model

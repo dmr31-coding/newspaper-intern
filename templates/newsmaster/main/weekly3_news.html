@@ -13,14 +13,13 @@
                                     {% for weekly_top_post in weekly_top_posts %}
                                         <div class="weekly3-single">
                                             <div class="weekly3-img">
-                                                <img src="{{ weekly_top_post.featured_image.url }}"
-                                                     alt="{{ weekly_top_post.title }}"
-                                                     height="150px">
+                                                <img src="{{ weekly_top_post.featured_image.url }} "
+                                                     alt="{{ weekly_top_post.title|truncatechars:10 }}" height="150px" width="150px">
                                             </div>
                                             <div class="weekly3-caption">
                                                 <h4>
                                                     <a href="{% url 'post-detail' featured_post.pk %}">{{ weekly_top_post.title }}
-                                                    </p>
+                                                    </a>
                                                 </div>
                                             </div>
                                         {% endfor %}

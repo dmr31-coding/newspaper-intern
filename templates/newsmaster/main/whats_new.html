@@ -1,3 +1,5 @@
+{% load static %}
+
 <!-- Whats New Start -->
 <section class="whats-news-area pt-50 pb-20 gray-bg">
     <div class="container">
@@ -15,12 +17,10 @@
                             <div class="properties__button">
                                 <!--Nav Button  -->
                                 <nav>
-                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
- 
- 
- 
 
-                                        {% for whats_new_category in top_categories %}
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        {% for whats_new_category in top_categories|slice:"4" %}
+
                                             <a class="nav-item nav-link"
                                                id="nav-{{ whats_new_category.name }}-tab"
                                                data-toggle="tab"
@@ -28,8 +28,10 @@
                                                role="tab"
                                                aria-controls="nav-{{ whats_new_category.name }}"
                                                aria-selected="false">{{ whats_new_category.name }}</a>
-                                        {% endfor %}
+                                    {% endfor %}
+
                                     </div>
+
                                 </nav>
                                 <!--End Nav Button  -->
                             </div>
@@ -42,34 +44,36 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- card one -->
                                 <div class="tab-pane fade show active"
-                                     id="nav-home"
+                                     id="nav-{{ whats_new_category.name }}"
                                      role="tabpanel"
-                                     aria-labelledby="nav-home-tab">
+                                     aria-labelledby="nav-{{ whats_new_category.name }}-tab">
                                     <div class="row">
 
-                                        {% for post in posts %}
+                                        {% for post in posts|slice:"1" %}
                                             <!-- Left Details Caption -->
                                             <div class="col-xl-6 col-lg-12">
                                                 <div class="whats-news-single mb-40 mb-40">
                                                     <div class="whates-img">
                                                         <img src="{{ post.featured_image.url }}"
-                                                             alt="{{ post.title }}"
-                                                             height="150px">
+                                                             alt="{{ post.title }}" height="150px" width="150px">
                                                     </div>
                                                     <div class="whates-caption">
                                                         <h4>
-                                                            <a href="{% url 'post-detail' featured_post.pk %}">{{ post.title|truncatechars:44 }}</a>
+                                                            <a href="{% url 'post-detail' featured_post.pk %}">{{ post.title|truncatechars:12 }}</a>
                                                         </h4>
-                                                        {% comment %} <span>by Alice cloe   -   Jun 19, 2020</span> {% endcomment %}
+                                                        <!-- {% comment %} <span>by Alice cloe   -   Jun 19, 2020</span> {% endcomment %} -->
                                                         <span>{{ post.published_at|date:"j M Y" }}</span>
-                                                        <p>{{ post.content|truncatechars:150 }}</p>
+                                                        <p>{{ post.content|truncatechars:15|safe }}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         {% endfor %}
+
+                                        
                                         <!-- Right single caption -->
                                         <div class="col-xl-6 col-lg-12">
                                             <div class="row">
+                                                {% for post in posts|slice:"4" %}
                                                 <!-- single -->
                                                 <div class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
                                                     <div class="whats-right-single mb-20">
@@ -87,15 +91,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
- 
+                                                {% endfor %}
+                                                
  
                                             </div>
                                         </div>
                                     </div>
                                 </div>
  
-                                {% for whats_new_category in whats_new_categories %}
-
+                                
+                            {% for whats_new_category in top_categories %}
                                     <!-- Card two -->
                                     <div class="tab-pane fade"
                                          id="nav-{{ whats_new_category.name }}"
@@ -103,23 +108,22 @@
                                          aria-labelledby="nav-{{ whats_new_category.name }}-tab">
                                         <div class="row">
  
-                                            {% for post in whats_new_category.post_set.all|slice:"6" %}
+                                            {% for post in whats_new_category.post_set.all|slice:"1" %}
                                                 <!-- Left Details Caption -->
                                                 <div class="col-xl-6">
                                                     <div class="whats-news-single mb-40">
                                                         <div class="whates-img">
                                                             <img src="{{ post.featured_image.url }}"
-                                                                 alt="{{ post.title }}"
-                                                                 height="150px">
+                                                                 alt="{{ post.title }}">
                                                         </div>
                                                         <div class="whates-caption">
                                                             <h4>
                                                                 <a href="{% url 'post-detail' featured_post.pk %}">{{ whats_new_category.name }}</a>
                                                             </h4>
-                                                            {% comment %} <span>by Alice cloe   -   Jun 19, 2020</span> {% endcomment %}
+                                                            <!-- {% comment %} <span>by Alice cloe   -   Jun 19, 2020</span> {% endcomment %} -->
                                                             <span>{{ whats_new_category.published_at|date:"j M Y" }}</span>
 
-                                                            <p>{{ whats_new_category.content|truncatechars:150 }}</p>
+                                                            <p>{{ whats_new_category.content|truncatechars:150|safe }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -129,14 +133,13 @@
                                             <div class="col-xl-6 col-lg-12">
                                                 <div class="row">
 
-                                                    {% for post in whats_new_category.post_set.all|slice:"6" %}
+                                                    {% for post in whats_new_category.post_set.all|slice:"4" %}
                                                         <!-- single -->
                                                         <div class="col-xl-12 col-lg-6 col-md-6 col-sm-10">
                                                             <div class="whats-right-single mb-20">
                                                                 <div class="whats-right-img">
                                                                     <img src="{{ whats_new_category.featured_image.url }}"
-                                                                         alt="{{ post.title }}"
-                                                                         height="150px">
+                                                                         alt="{{ post.title }}">
                                                                 </div>
                                                                 <div class="whats-right-cap">
                                                                     <span class="colorb">{{ whats_new_category.name }}</span>
@@ -154,8 +157,8 @@
                                             </div>
                                         </div>
                                     </div>
- 
-                                {% endfor %}
+                            {% endfor %}
+                                
  
                             </div>
                             <!-- End Nav Card -->
@@ -168,101 +171,10 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <!-- Flow Socail -->
-                <div class="single-follow mb-45">
-                    <div class="single-box">
-                        <div class="follow-us d-flex align-items-center">
-                            <div class="follow-social">
-                                <a href="#">
-                                    <img src="assets/img/news/icon-fb.png" alt="">
-                                </a>
-                            </div>
-                            <div class="follow-count">
-                                <span>8,045</span>
-                                <p>Fans</p>
-                            </div>
-                        </div>
-                        <div class="follow-us d-flex align-items-center">
-                            <div class="follow-social">
-                                <a href="#">
-                                    <img src="assets/img/news/icon-tw.png" alt="">
-                                </a>
-                            </div>
-                            <div class="follow-count">
-                                <span>8,045</span>
-                                <p>Fans</p>
-                            </div>
-                        </div>
-                        <div class="follow-us d-flex align-items-center">
-                            <div class="follow-social">
-                                <a href="#">
-                                    <img src="assets/img/news/icon-ins.png" alt="">
-                                </a>
-                            </div>
-                            <div class="follow-count">
-                                <span>8,045</span>
-                                <p>Fans</p>
-                            </div>
-                        </div>
-                        <div class="follow-us d-flex align-items-center">
-                            <div class="follow-social">
-                                <a href="#">
-                                    <img src="assets/img/news/icon-yo.png" alt="">
-                                </a>
-                            </div>
-                            <div class="follow-count">
-                                <span>8,045</span>
-                                <p>Fans</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Most Recent Area -->
-                <div class="most-recent-area">
-                    <!-- Section Tittle -->
-                    <div class="small-tittle mb-20">
-                        <h4>Most Recent</h4>
-                    </div>
-                    <!-- Details -->
-                    <div class="most-recent mb-40">
-                        <div class="most-recent-img">
-                            <img src="assets/img/gallery/most_recent.png" alt="">
-                            <div class="most-recent-cap">
-                                <span class="bgbeg">Vogue</span>
-                                <h4>
-                                    <a href="latest_news.html">What to Wear: 9+ Cute Work
-                                        <br>
-                                    Outfits to Wear This.</a>
-                                </h4>
-                                <p>Jhon  |  2 hours ago</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="most-recent-single">
-                        <div class="most-recent-images">
-                            <img src="assets/img/gallery/most_recent1.png" alt="">
-                        </div>
-                        <div class="most-recent-capt">
-                            <h4>
-                                <a href="latest_news.html">Scarlett’s disappointment at latest accolade</a>
-                            </h4>
-                            <p>Jhon  |  2 hours ago</p>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="most-recent-single">
-                        <div class="most-recent-images">
-                            <img src="assets/img/gallery/most_recent2.png" alt="">
-                        </div>
-                        <div class="most-recent-capt">
-                            <h4>
-                                <a href="latest_news.html">Most Beautiful Things to Do in Sidney with Your BF</a>
-                            </h4>
-                            <p>Jhon  |  3 hours ago</p>
-                        </div>
-                    </div>
-                </div>
+                
+                    
+                    
+                
             </div>
         </div>
     </div>

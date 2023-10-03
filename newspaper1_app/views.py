@@ -38,24 +38,50 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 
+# class HomeView(ListView):
+#     model = Post
+#     template_name = "newsmaster/home.html"
+#     context_object_name = "posts"
+#     queryset = Post.objects.filter(status="active", published_at__isnull=False).order_by("-published_at")[:2]
+    
+    
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         context["featured_post"] = (
+#             Post.objects.filter(status="active", published_at__isnull=False).order_by("-views_count").first()[2:5]
+    
+#         )
+        
+#         one_week_ago = timezone.now() - timedelta(days=7)
+#         context["weekly_top_posts"] = Post.objects.filter(status="active", published_at__isnull=False, published_at__gte=one_week_ago,).order_by("-published_at")[:4]
+        
+         
+#         return context
+
 class HomeView(ListView):
     model = Post
     template_name = "newsmaster/home.html"
     context_object_name = "posts"
-    queryset = Post.objects.filter(status="active", published_at__isnull=False).order_by("-published_at")[:2]
-    
-    
+    queryset = Post.objects.filter(
+        status="active", published_at__isnull=False
+    ).order_by("-published_at")[:2]
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["featured_post"] = (
-            Post.objects.filter(status="active", published_at__isnull=False).order_by("-views_count").first()
-    
+            Post.objects.filter(status="active", published_at__isnull=False)
+            .order_by("-views_count")
+            .first()
         )
-        
+        context["featured_posts"] = Post.objects.filter(
+            status="active", published_at__isnull=False
+        ).order_by("-views_count")[3:5]
         one_week_ago = timezone.now() - timedelta(days=7)
-        context["weekly_top_posts"] = Post.objects.filter(status="active", published_at__isnull=False, published_at__gte=one_week_ago,).order_by("-published_at")[:7]
-        
-         
+        context["weekly_top_posts"] = Post.objects.filter(
+            status="active",
+            published_at__isnull=False,
+            published_at__gte=one_week_ago,
+        ).order_by("-published_at")[:7]
         return context
     
 
@@ -63,6 +89,8 @@ class PostDetailView(DetailView):
     model = Post
     template_name = "newsmaster/detail.html"
     context_object_name = "post"
+    
+    
     
     def get_queryset(self):
         qs = super().get_queryset()
@@ -79,6 +107,12 @@ class PostDetailView(DetailView):
         obj.views_count += 1
         obj.save()
         
+        # context["featured_post"] = (
+        #     Post.objects.filter(status="active", published_at__isnull=False)
+        #     .order_by("-views_count")
+        #     .first()
+        # )
+        
         context["previous_post"] = (
             Post.objects.filter(status="active", published_at__isnull=False, id__lt=obj.id).order_by("-id").first()
     
@@ -92,7 +126,7 @@ class PostDetailView(DetailView):
     
         )
         
-        context["recent_posts"] = Post.objects.filter(status="active", published_at__isnull=False).order_by("-views_count")[:4]
+        context["recent_posts"] = Post.objects.filter(status="active", published_at__isnull=False).order_by("-views_count")[:5]
         
         return context
     
@@ -375,3 +409,18 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     template_name = "news_admin/category_create.html"
     success_url = reverse_lazy("category-list")
+    
+    
+    
+from django.shortcuts import render
+from django.views import View
+from .models import Article
+
+class PopularPostView(View):
+    def get(self, request):
+        # Retrieve popular posts based on views count
+        popular_posts = Article.objects.order_by('-views')[:4]  # Fetch top 10 posts by views
+
+        # Other necessary operations or calculations can be performed here
+
+        return render(request, 'recent.html', {'popular_posts': popular_posts})
